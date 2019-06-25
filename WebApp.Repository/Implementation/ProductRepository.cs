@@ -1,4 +1,5 @@
 ﻿using Infrastructure.interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,7 @@ namespace WebApp.Repository.Implementation
 			return getbyId;
 		}
 
-		public async Task<List<Product>> GetAll()
+		public async Task<List<Product>> GetAllAsyn()
 		{
 			var data = await _productRepository.GetAllAsyn(x => x.ProductCategory);
 			return data.ToList();

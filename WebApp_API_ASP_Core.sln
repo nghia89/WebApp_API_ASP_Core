@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp.Repository", "WebApp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp.Data.EF", "WebApp.Data.EF\WebApp.Data.EF.csproj", "{1E623840-6C88-49CB-A56A-033FEAE1C2C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{BB286707-65A3-4ABE-A4A3-91EF9C44815A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{BB286707-65A3-4ABE-A4A3-91EF9C44815A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{0BB206B1-9B12-439C-AD71-6F09FD2D604E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utilities", "Utilities\Utilities.csproj", "{0BB206B1-9B12-439C-AD71-6F09FD2D604E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoMappers", "AutoMappers\AutoMappers.csproj", "{4FF37F74-FADF-460A-83FC-7C46A694DA47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{0BB206B1-9B12-439C-AD71-6F09FD2D604E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BB206B1-9B12-439C-AD71-6F09FD2D604E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BB206B1-9B12-439C-AD71-6F09FD2D604E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FF37F74-FADF-460A-83FC-7C46A694DA47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FF37F74-FADF-460A-83FC-7C46A694DA47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FF37F74-FADF-460A-83FC-7C46A694DA47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FF37F74-FADF-460A-83FC-7C46A694DA47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

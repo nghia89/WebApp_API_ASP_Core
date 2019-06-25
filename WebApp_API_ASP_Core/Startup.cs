@@ -1,11 +1,18 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Infrastructure.interfaces;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WebApp.Business.Implementation;
+using WebApp.Business.interfaces;
+using WebApp.Data.EF;
 using WebApp.Data.EF.Entities;
+using WebApp.Repository.Implementation;
+using WebApp.Repository.interfaces;
 
 namespace WebApp_API_ASP_Core
 {
@@ -21,7 +28,8 @@ namespace WebApp_API_ASP_Core
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddDbContext<DbContext>(Options => Options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")),ServiceLifetime.Scoped);
+			services.AddDbContext<DbContext>(Options =>
+			Options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")),ServiceLifetime.Scoped);
 
 			services.AddIdentity<AppUser,AppRole>(options => {
 				options.Password.RequireDigit = false;
@@ -34,6 +42,24 @@ namespace WebApp_API_ASP_Core
 		   .AddEntityFrameworkStores<DbContext>()
 		   .AddDefaultTokenProviders();
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+			services.AddAutoMapper(typeof(Startup));
+
+
+			///add server
+			services.AddTransient(typeof(IUnitOfWork),typeof(EFUnitOfWork));
+			services.AddTransient(typeof(IRepository<>),typeof(EFRepository<>));
+
+			//add repository
+			services.AddScoped<IProductRepository,ProductRepository>();
+
+			//add business
+			services.AddScoped<IProductBusiness,ProductBusiness>();
+
+			///
+
+			//services.AddSingleton(Mapper.Configuration);
+			//services.AddScoped<IMapper>(sp => new Mapper(sp.GetRequiredService<AutoMapper.IConfigurationProvider>(),sp.GetService));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

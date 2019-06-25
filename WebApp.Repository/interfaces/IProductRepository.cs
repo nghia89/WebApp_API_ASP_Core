@@ -9,7 +9,7 @@ namespace WebApp.Repository.interfaces
 	public interface IProductRepository
 	{
 		Task<Product> Add(Product model);
-		Task<List<Product>> GetAll();
+		Task<List<Product>> GetAllAsyn();
 		Task<Product> Update(Product model);
 		Task<long> DeleteAsyn(long id);
 		Task<Product> GetById(long id);

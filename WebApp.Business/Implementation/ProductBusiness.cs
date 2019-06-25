@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebApp.Business.interfaces;
+using WebApp.Business.Mappers;
 using WebApp.Business.Model;
 using WebApp.Data.EF;
 using WebApp.Data.EF.Entities;
@@ -44,17 +46,19 @@ namespace WebApp.Business.Implementation
 				Status = model.Status
 			};
 			var data = await _productRepository.Add(product);
-			return model;
+			return data.ToModel();
 		}
 
-		public Task<List<ProductModel>> GetAll()
+		public async Task<List<ProductModel>> GetAll()
 		{
-			throw new NotImplementedException();
+			var listAll =await _productRepository.GetAllAsyn();
+			return listAll.Select(a=>a.ToModel()).ToList();
 		}
 
-		public Task<ProductModel> GetById(long id)
+		public async Task<ProductModel> GetById(long id)
 		{
-			throw new NotImplementedException();
+			var data = await _productRepository.GetById(id);
+			return data.ToModel();
 		}
 
 		public Task<List<ProductModel>> Paging(int page,int pageSize)
@@ -62,9 +66,30 @@ namespace WebApp.Business.Implementation
 			throw new NotImplementedException();
 		}
 
-		public Task<ProductModel> Update(ProductModel product)
+		public async Task<ProductModel> Update(ProductModel model)
 		{
-			throw new NotImplementedException();
+			Product product = new Product {
+				Name = model.Name,
+				Content = model.Content,
+				DateCreated = DateTime.UtcNow.AddHours(7),
+				DateModified = DateTime.UtcNow.AddHours(7),
+				Description = model.Description,
+				HomeFlag = model.HomeFlag,
+				HotFlag = model.HotFlag,
+				Image = model.Image,
+				OriginalPrice = model.OriginalPrice,
+				Price = model.Price,
+				ProductCategoryId = model.ProductCategoryId,
+				ProductTagId = model.ProductTagId,
+				PromotionPrice = model.PromotionPrice,
+				SeoAlias = model.SeoAlias,
+				SeoDescription = model.SeoDescription,
+				SeoKeywords = model.SeoKeywords,
+				SeoPageTitle = model.SeoPageTitle,
+				Status = model.Status
+			};
+			var data = await _productRepository.Update(product);
+			return data.ToModel();
 		}
 	}
 }
