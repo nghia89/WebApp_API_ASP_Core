@@ -9,7 +9,7 @@ using WebApp.Data.EF;
 namespace WebApp.Data.EF.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20190626151105_initial")]
+    [Migration("20190626154633_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -255,7 +255,7 @@ namespace WebApp.Data.EF.Migrations
 
                     b.HasIndex("ProductCategoryId");
 
-                    b.ToTable("products");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("WebApp.Data.EF.Entities.ProductCategory", b =>
@@ -295,7 +295,7 @@ namespace WebApp.Data.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("productCategories");
+                    b.ToTable("ProductCategories");
                 });
 
             modelBuilder.Entity("WebApp.Data.EF.Entities.ProductTag", b =>
@@ -315,7 +315,7 @@ namespace WebApp.Data.EF.Migrations
 
                     b.HasIndex("TagId1");
 
-                    b.ToTable("productTags");
+                    b.ToTable("ProductTags");
                 });
 
             modelBuilder.Entity("WebApp.Data.EF.Entities.Tag", b =>
@@ -329,7 +329,7 @@ namespace WebApp.Data.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("tags");
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("WebApp.Data.EF.Entities.AppRole", b =>

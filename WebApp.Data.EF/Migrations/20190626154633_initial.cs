@@ -57,7 +57,7 @@ namespace WebApp.Data.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "productCategories",
+                name: "ProductCategories",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -80,11 +80,11 @@ namespace WebApp.Data.EF.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_productCategories", x => x.Id);
+                    table.PrimaryKey("PK_ProductCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tags",
+                name: "Tags",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -94,7 +94,7 @@ namespace WebApp.Data.EF.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tags", x => x.Id);
+                    table.PrimaryKey("PK_Tags", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -204,7 +204,7 @@ namespace WebApp.Data.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "products",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -233,17 +233,17 @@ namespace WebApp.Data.EF.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_products", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_products_productCategories_ProductCategoryId",
+                        name: "FK_Products_ProductCategories_ProductCategoryId",
                         column: x => x.ProductCategoryId,
-                        principalTable: "productCategories",
+                        principalTable: "ProductCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "productTags",
+                name: "ProductTags",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -254,17 +254,17 @@ namespace WebApp.Data.EF.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_productTags", x => x.Id);
+                    table.PrimaryKey("PK_ProductTags", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_productTags_products_ProductId",
+                        name: "FK_ProductTags_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "products",
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_productTags_tags_TagId1",
+                        name: "FK_ProductTags_Tags_TagId1",
                         column: x => x.TagId1,
-                        principalTable: "tags",
+                        principalTable: "Tags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -307,18 +307,18 @@ namespace WebApp.Data.EF.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_products_ProductCategoryId",
-                table: "products",
+                name: "IX_Products_ProductCategoryId",
+                table: "Products",
                 column: "ProductCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_productTags_ProductId",
-                table: "productTags",
+                name: "IX_ProductTags_ProductId",
+                table: "ProductTags",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_productTags_TagId1",
-                table: "productTags",
+                name: "IX_ProductTags_TagId1",
+                table: "ProductTags",
                 column: "TagId1");
         }
 
@@ -340,7 +340,7 @@ namespace WebApp.Data.EF.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "productTags");
+                name: "ProductTags");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -349,13 +349,13 @@ namespace WebApp.Data.EF.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "products");
+                name: "Products");
 
             migrationBuilder.DropTable(
-                name: "tags");
+                name: "Tags");
 
             migrationBuilder.DropTable(
-                name: "productCategories");
+                name: "ProductCategories");
         }
     }
 }

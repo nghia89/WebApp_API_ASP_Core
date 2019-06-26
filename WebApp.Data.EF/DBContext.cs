@@ -44,12 +44,12 @@ namespace WebApp.Data.EF
 			base.OnModelCreating(builder);
 		}
 
-		public DbSet<AppRole> appRoles { get; set; }
-		public DbSet<AppUser> appUsers { get; set; }
-		public DbSet<Product> products { get; set; }
-		public DbSet<ProductCategory> productCategories { get; set; }
-		public DbSet<ProductTag> productTags { get; set; }
-		public DbSet<Tag> tags { get; set; }
+		public DbSet<AppRole> AppRoles { get; set; }
+		public DbSet<AppUser> AppUsers { get; set; }
+		public DbSet<Product> Products { get; set; }
+		public DbSet<ProductCategory> ProductCategories { get; set; }
+		public DbSet<ProductTag> ProductTags { get; set; }
+		public DbSet<Tag> Tags { get; set; }
 
 		
 

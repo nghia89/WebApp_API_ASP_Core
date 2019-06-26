@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Serialization;
 using WebApp.Business.Implementation;
 using WebApp.Business.interfaces;
 using WebApp.Data.EF;
@@ -43,7 +44,7 @@ namespace WebApp_API_ASP_Core
 		   .AddEntityFrameworkStores<DBContext>()
 		   .AddDefaultTokenProviders();
 
-			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+			services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
 			services.AddAutoMapper(typeof(Startup));
 
