@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿
+
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -12,20 +14,14 @@ namespace WebApp.Data.EF
 	public class DBContext:IdentityDbContext<AppUser>
 	{
 		
-		public DBContext(DbContextOptions<DbContext> options):base(options)
+		public DBContext(DbContextOptions<DBContext> options):base(options)
 		{
 
 		}
-		public DbSet<AppRole> appRoles { get; set; }
-		public DbSet<AppUser> appUsers { get; set; }
-		public DbSet<Product> products { get; set; }
-		public DbSet<ProductCategory> productCategories { get; set; }
-		public DbSet<ProductTag> productTags { get; set; }
-		public DbSet<Tag> tags { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
-			base.OnModelCreating(builder);
+		
 			builder.Entity<AppUser>(entity => entity.Property(m => m.Id).HasMaxLength(127));
 			builder.Entity<AppRole>(entity => entity.Property(m => m.Id).HasMaxLength(127));
 			builder.Entity<IdentityUserLogin<string>>(entity => {
@@ -42,7 +38,17 @@ namespace WebApp.Data.EF
 				entity.Property(m => m.Name).HasMaxLength(127);
 
 			});
+			base.OnModelCreating(builder);
 		}
+
+		public DbSet<AppRole> appRoles { get; set; }
+		public DbSet<AppUser> appUsers { get; set; }
+		public DbSet<Product> products { get; set; }
+		public DbSet<ProductCategory> productCategories { get; set; }
+		public DbSet<ProductTag> productTags { get; set; }
+		public DbSet<Tag> tags { get; set; }
+
+		
 
 		public override int SaveChanges()
 		{

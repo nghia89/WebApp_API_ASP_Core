@@ -28,9 +28,9 @@ namespace WebApp_API_ASP_Core
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddDbContext<DbContext>(Options =>
+			services.AddDbContext<DBContext>(Options =>
 			Options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")),ServiceLifetime.Scoped);
-
+			
 			services.AddIdentity<AppUser,AppRole>(options => {
 				options.Password.RequireDigit = false;
 				options.Password.RequiredLength = 6;
@@ -39,8 +39,9 @@ namespace WebApp_API_ASP_Core
 				options.Password.RequireUppercase = false;
 
 			})
-		   .AddEntityFrameworkStores<DbContext>()
+		   .AddEntityFrameworkStores<DBContext>()
 		   .AddDefaultTokenProviders();
+
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
 			services.AddAutoMapper(typeof(Startup));
@@ -50,11 +51,13 @@ namespace WebApp_API_ASP_Core
 			services.AddTransient(typeof(IUnitOfWork),typeof(EFUnitOfWork));
 			services.AddTransient(typeof(IRepository<>),typeof(EFRepository<>));
 
-			//add repository
-			services.AddScoped<IProductRepository,ProductRepository>();
-
 			//add business
-			services.AddScoped<IProductBusiness,ProductBusiness>();
+			services.AddTransient<IProductBusiness,ProductBusiness>();
+
+			//add repository
+			services.AddTransient<IProductRepository,ProductRepository>();
+
+
 
 			///
 
