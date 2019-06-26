@@ -28,8 +28,9 @@ namespace WebApp_API_ASP_Core
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			var MySqlConnectionString = Configuration.GetConnectionString("DefaultConnection");
 			services.AddDbContext<DBContext>(Options =>
-			Options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")),ServiceLifetime.Scoped);
+			Options.UseMySql(MySqlConnectionString),ServiceLifetime.Scoped);
 			
 			services.AddIdentity<AppUser,AppRole>(options => {
 				options.Password.RequireDigit = false;

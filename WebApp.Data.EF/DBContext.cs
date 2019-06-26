@@ -4,7 +4,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 using System;
+using System.IO;
 using System.Linq;
 using WebApp.Data.EF.Entities;
 using WebApp.Data.EF.interfaces;
@@ -67,6 +70,20 @@ namespace WebApp.Data.EF
 				}
 			}
 			return base.SaveChanges();
+		}
+	}
+
+	public class DesignTimeDbContextFactory:IDesignTimeDbContextFactory<DBContext>
+	{
+		public DBContext CreateDbContext(string[] args)
+		{
+			IConfiguration configuration = new ConfigurationBuilder()
+				.SetBasePath(Directory.GetCurrentDirectory())
+				.AddJsonFile("appsettings.json").Build();
+			var builder = new DbContextOptionsBuilder<DBContext>();
+			var connectionString = configuration.GetConnectionString("DefaultConnection");
+			builder.UseMySql(connectionString);
+			return new DBContext(builder.Options);
 		}
 	}
 }
