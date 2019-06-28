@@ -41,9 +41,9 @@ namespace Infrastructure.interfaces
 
 		Task<T> GetABysync(Expression<Func<T,bool>> predicate,params Expression<Func<T,object>>[] includeProperties);
 
-		T GetAByIdinclude(Expression<Func<T,bool>> predicate,params Expression<Func<T,object>>[] includeProperties);
+		T GetAByIdInclude(Expression<Func<T,bool>> predicate,params Expression<Func<T,object>>[] includeProperties);
 
-		Task<T> GetAByIdincludeAsyn(Expression<Func<T,bool>> predicate,params Expression<Func<T,object>>[] includeProperties);
+		Task<T> GetAByIdIncludeAsyn(Expression<Func<T,bool>> predicate,params Expression<Func<T,object>>[] includeProperties);
 
 		T FindBy(Expression<Func<T,bool>> predicate,params Expression<Func<T,object>>[] includeProperties);
 

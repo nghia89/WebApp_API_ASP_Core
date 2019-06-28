@@ -251,7 +251,7 @@ namespace WebApp.Data.EF
 			return await items.Where(predicate).FirstOrDefaultAsync();
 		}
 
-		public T GetAByIdinclude(Expression<Func<T,bool>> predicate,params Expression<Func<T,object>>[] includeProperties)
+		public T GetAByIdInclude(Expression<Func<T,bool>> predicate,params Expression<Func<T,object>>[] includeProperties)
 		{
 			IQueryable<T> items = _context.Set<T>();
 			if(includeProperties != null)
@@ -267,7 +267,7 @@ namespace WebApp.Data.EF
 		public async Task<(ICollection<T>, long count)> Paging(int page,int pageSize,Expression<Func<T,bool>> predicate,params Expression<Func<T,object>>[] includeProperties)
 		{
 			IQueryable<T> items = _context.Set<T>();
-			var totalRow = _context.Set<T>().Where(predicate);
+			//var totalRow = _context.Set<T>().Where(predicate);
 			if(includeProperties != null)
 			{
 				foreach(var includeProperty in includeProperties)
@@ -275,15 +275,16 @@ namespace WebApp.Data.EF
 					items = items.Include(includeProperty);
 				}
 			}
+			var data = items.Where(predicate);
 			var skip = (page - 1) * pageSize;
-			var data = await items.Where(predicate).Skip(skip)
+			var dataPaging = await data.Skip(skip)
 								  .Take(pageSize)
 								  .ToListAsync();
 
-			return (data, totalRow.Count());
+			return (dataPaging, data.Count());
 		}
 
-		public async Task<T> GetAByIdincludeAsyn(Expression<Func<T,bool>> predicate,params Expression<Func<T,object>>[] includeProperties)
+		public async Task<T> GetAByIdIncludeAsyn(Expression<Func<T,bool>> predicate,params Expression<Func<T,object>>[] includeProperties)
 		{
 			IQueryable<T> items = _context.Set<T>();
 			if(includeProperties != null)
