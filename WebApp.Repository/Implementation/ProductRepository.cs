@@ -50,7 +50,7 @@ namespace WebApp.Repository.Implementation
 
 		public async Task<Product> GetById(long id)
 		{
-			var data = await _productRepository.GetAByIdincludeAsyn(x => x.Id == id);
+			var data = await _productRepository.GetAByIdIncludeAsyn(x => x.Id == id);
 			return data;
 		}
 

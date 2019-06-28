@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
+using Swashbuckle.AspNetCore.Swagger;
+using System.Linq;
 using WebApp.Business.Implementation;
 using WebApp.Business.interfaces;
 using WebApp.Data.EF;
@@ -46,6 +48,17 @@ namespace WebApp_API_ASP_Core
 
 			services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
+			services.AddSwaggerGen(c =>
+			{
+				c.SwaggerDoc("v1",new Info {
+					Version = "v1",
+					Title = "My API",
+					Description = "My API Thanh Nghia ASP.NET Core Web API",
+					TermsOfService = "None",
+					Contact = new Contact() { Name = "Talking Dotnet",Email = "thangnghia@gamil.com",Url = "www.webApi.com" }
+				});
+			});
+
 			services.AddAutoMapper(typeof(Startup));
 
 
@@ -79,6 +92,26 @@ namespace WebApp_API_ASP_Core
 				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 				app.UseHsts();
 			}
+			// Enable middleware to serve generated Swagger as a JSON endpoint.
+			app.UseSwagger();
+
+			// Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+			// specifying the Swagger JSON endpoint.
+			app.UseSwagger(c => {
+				c.PreSerializeFilters.Add((document,request) => {
+					var paths = document.Paths.ToDictionary(item => item.Key.ToLowerInvariant(),item => item.Value);
+					document.Paths.Clear();
+					foreach(var pathItem in paths)
+					{
+						document.Paths.Add(pathItem.Key,pathItem.Value);
+					}
+				});
+			});
+	
+			app.UseSwaggerUI(c =>
+			{
+				c.SwaggerEndpoint("/swagger/v1/swagger.json","My API Thanh Nghia");
+			});
 
 			app.UseHttpsRedirection();
 			app.UseMvc();

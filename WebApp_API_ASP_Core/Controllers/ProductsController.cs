@@ -6,12 +6,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Business.interfaces;
 using WebApp.Business.Model;
+using WebApp_API_ASP_Core.Extensions;
 
 namespace WebApp_API_ASP_Core.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    public class ProductsController : ControllerBase
+	[ApiController]
+	[MiddlewareFilter(typeof(LocalizationPipeline))]
+	public class ProductsController : ControllerBase
     {
 		private readonly IProductBusiness _productBusiness;
 		public ProductsController(IProductBusiness productBusiness)
