@@ -57,7 +57,7 @@ namespace WebApp.Data.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductCategories",
+                name: "ProductCategory",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -80,11 +80,11 @@ namespace WebApp.Data.EF.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductCategories", x => x.Id);
+                    table.PrimaryKey("PK_ProductCategory", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tags",
+                name: "Tag",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -94,7 +94,7 @@ namespace WebApp.Data.EF.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tags", x => x.Id);
+                    table.PrimaryKey("PK_Tag", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -204,12 +204,12 @@ namespace WebApp.Data.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "Product",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 200, nullable: false),
                     Image = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
                     PromotionPrice = table.Column<decimal>(nullable: true),
@@ -233,17 +233,17 @@ namespace WebApp.Data.EF.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_Product", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_ProductCategories_ProductCategoryId",
+                        name: "FK_Product_ProductCategory_ProductCategoryId",
                         column: x => x.ProductCategoryId,
-                        principalTable: "ProductCategories",
+                        principalTable: "ProductCategory",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductTags",
+                name: "ProductTag",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -254,17 +254,17 @@ namespace WebApp.Data.EF.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductTags", x => x.Id);
+                    table.PrimaryKey("PK_ProductTag", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductTags_Products_ProductId",
+                        name: "FK_ProductTag_Product_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Products",
+                        principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductTags_Tags_TagId1",
+                        name: "FK_ProductTag_Tag_TagId1",
                         column: x => x.TagId1,
-                        principalTable: "Tags",
+                        principalTable: "Tag",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -307,18 +307,30 @@ namespace WebApp.Data.EF.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_ProductCategoryId",
-                table: "Products",
+                name: "IX_Product_Id",
+                table: "Product",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Product_Name",
+                table: "Product",
+                column: "Name")
+                .Annotation("MySql:FullTextIndex", true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Product_ProductCategoryId",
+                table: "Product",
                 column: "ProductCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductTags_ProductId",
-                table: "ProductTags",
+                name: "IX_ProductTag_ProductId",
+                table: "ProductTag",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductTags_TagId1",
-                table: "ProductTags",
+                name: "IX_ProductTag_TagId1",
+                table: "ProductTag",
                 column: "TagId1");
         }
 
@@ -340,7 +352,7 @@ namespace WebApp.Data.EF.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "ProductTags");
+                name: "ProductTag");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -349,13 +361,13 @@ namespace WebApp.Data.EF.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Product");
 
             migrationBuilder.DropTable(
-                name: "Tags");
+                name: "Tag");
 
             migrationBuilder.DropTable(
-                name: "ProductCategories");
+                name: "ProductCategory");
         }
     }
 }

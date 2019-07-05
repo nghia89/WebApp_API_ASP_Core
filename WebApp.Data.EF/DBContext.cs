@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 using System.Linq;
+using WebApp.Data.EF.BuilderExtensions;
 using WebApp.Data.EF.Entities;
 using WebApp.Data.EF.interfaces;
 
@@ -24,23 +25,7 @@ namespace WebApp.Data.EF
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
-		
-			builder.Entity<AppUser>(entity => entity.Property(m => m.Id).HasMaxLength(127));
-			builder.Entity<AppRole>(entity => entity.Property(m => m.Id).HasMaxLength(127));
-			builder.Entity<IdentityUserLogin<string>>(entity => {
-				entity.Property(m => m.LoginProvider).HasMaxLength(127);
-				entity.Property(m => m.ProviderKey).HasMaxLength(127);
-			});
-			builder.Entity<IdentityUserRole<string>>(entity => {
-				entity.Property(m => m.UserId).HasMaxLength(127);
-				entity.Property(m => m.RoleId).HasMaxLength(127);
-			});
-			builder.Entity<IdentityUserToken<string>>(entity => {
-				entity.Property(m => m.UserId).HasMaxLength(127);
-				entity.Property(m => m.LoginProvider).HasMaxLength(127);
-				entity.Property(m => m.Name).HasMaxLength(127);
-
-			});
+			builder.ConfigModelBuilder();
 			base.OnModelCreating(builder);
 		}
 

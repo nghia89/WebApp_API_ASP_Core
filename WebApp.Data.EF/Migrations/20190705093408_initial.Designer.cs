@@ -9,7 +9,7 @@ using WebApp.Data.EF;
 namespace WebApp.Data.EF.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20190626154633_initial")]
+    [Migration("20190705093408_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -223,7 +223,9 @@ namespace WebApp.Data.EF.Migrations
 
                     b.Property<string>("Image");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200);
 
                     b.Property<decimal>("OriginalPrice");
 
@@ -253,9 +255,15 @@ namespace WebApp.Data.EF.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("Name")
+                        .HasAnnotation("MySql:FullTextIndex", true);
+
                     b.HasIndex("ProductCategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("WebApp.Data.EF.Entities.ProductCategory", b =>
@@ -295,7 +303,7 @@ namespace WebApp.Data.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductCategories");
+                    b.ToTable("ProductCategory");
                 });
 
             modelBuilder.Entity("WebApp.Data.EF.Entities.ProductTag", b =>
@@ -315,7 +323,7 @@ namespace WebApp.Data.EF.Migrations
 
                     b.HasIndex("TagId1");
 
-                    b.ToTable("ProductTags");
+                    b.ToTable("ProductTag");
                 });
 
             modelBuilder.Entity("WebApp.Data.EF.Entities.Tag", b =>
@@ -329,7 +337,7 @@ namespace WebApp.Data.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tag");
                 });
 
             modelBuilder.Entity("WebApp.Data.EF.Entities.AppRole", b =>
