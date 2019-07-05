@@ -281,7 +281,9 @@ namespace WebApp.Data.EF.Migrations
 
                     b.Property<string>("Image");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200);
 
                     b.Property<int?>("ParentId");
 
@@ -301,6 +303,12 @@ namespace WebApp.Data.EF.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("Name")
+                        .HasAnnotation("MySql:FullTextIndex", true);
+
                     b.ToTable("ProductCategory");
                 });
 
@@ -316,6 +324,9 @@ namespace WebApp.Data.EF.Migrations
                     b.Property<long?>("TagId1");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
 
                     b.HasIndex("ProductId");
 
@@ -334,6 +345,9 @@ namespace WebApp.Data.EF.Migrations
                     b.Property<string>("Type");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
 
                     b.ToTable("Tag");
                 });
@@ -396,7 +410,8 @@ namespace WebApp.Data.EF.Migrations
                 {
                     b.HasOne("WebApp.Data.EF.Entities.ProductCategory", "ProductCategory")
                         .WithMany("Products")
-                        .HasForeignKey("ProductCategoryId");
+                        .HasForeignKey("ProductCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("WebApp.Data.EF.Entities.ProductTag", b =>

@@ -37,14 +37,20 @@ namespace WebApp.Data.EF.BuilderExtensions
 
 			modelBuilder.Entity<ProductCategory>(entity => {
 				entity.ToTable(nameof(ProductCategory));
+				entity.Property(x => x.Name).HasMaxLength(200).IsRequired();
+				entity.HasIndex(x => x.Id).IsUnique();
+				entity.HasIndex(x => x.Name).ForMySqlIsFullText(true);
+				entity.HasMany(a => a.Products).WithOne(b => b.ProductCategory).OnDelete(DeleteBehavior.Cascade);
 			});
 
 			modelBuilder.Entity<ProductTag>(entity => {
 				entity.ToTable(nameof(ProductTag));
+				entity.HasIndex(x => x.Id).IsUnique();
 			});
 
 			modelBuilder.Entity<Tag>(entity => {
 				entity.ToTable(nameof(Tag));
+				entity.HasIndex(x => x.Id).IsUnique();
 			});
 		
 		}

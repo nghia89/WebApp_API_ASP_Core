@@ -62,7 +62,7 @@ namespace WebApp.Data.EF.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 200, nullable: false),
                     Description = table.Column<string>(nullable: true),
                     ParentId = table.Column<int>(nullable: true),
                     HomeOrder = table.Column<int>(nullable: true),
@@ -239,7 +239,7 @@ namespace WebApp.Data.EF.Migrations
                         column: x => x.ProductCategoryId,
                         principalTable: "ProductCategory",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -324,6 +324,24 @@ namespace WebApp.Data.EF.Migrations
                 column: "ProductCategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductCategory_Id",
+                table: "ProductCategory",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductCategory_Name",
+                table: "ProductCategory",
+                column: "Name")
+                .Annotation("MySql:FullTextIndex", true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductTag_Id",
+                table: "ProductTag",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductTag_ProductId",
                 table: "ProductTag",
                 column: "ProductId");
@@ -332,6 +350,12 @@ namespace WebApp.Data.EF.Migrations
                 name: "IX_ProductTag_TagId1",
                 table: "ProductTag",
                 column: "TagId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tag_Id",
+                table: "Tag",
+                column: "Id",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

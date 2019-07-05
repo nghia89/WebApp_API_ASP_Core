@@ -9,7 +9,7 @@ using WebApp.Data.EF;
 namespace WebApp.Data.EF.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20190705093408_initial")]
+    [Migration("20190705103404_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -283,7 +283,9 @@ namespace WebApp.Data.EF.Migrations
 
                     b.Property<string>("Image");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200);
 
                     b.Property<int?>("ParentId");
 
@@ -303,6 +305,12 @@ namespace WebApp.Data.EF.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("Name")
+                        .HasAnnotation("MySql:FullTextIndex", true);
+
                     b.ToTable("ProductCategory");
                 });
 
@@ -318,6 +326,9 @@ namespace WebApp.Data.EF.Migrations
                     b.Property<long?>("TagId1");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
 
                     b.HasIndex("ProductId");
 
@@ -336,6 +347,9 @@ namespace WebApp.Data.EF.Migrations
                     b.Property<string>("Type");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
 
                     b.ToTable("Tag");
                 });
@@ -398,7 +412,8 @@ namespace WebApp.Data.EF.Migrations
                 {
                     b.HasOne("WebApp.Data.EF.Entities.ProductCategory", "ProductCategory")
                         .WithMany("Products")
-                        .HasForeignKey("ProductCategoryId");
+                        .HasForeignKey("ProductCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("WebApp.Data.EF.Entities.ProductTag", b =>
