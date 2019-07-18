@@ -8,6 +8,6 @@ namespace WebApp.Data.EF.interfaces
 	{
 		DateTime DateCreated { set; get; }
 
-		DateTime DateModified { set; get; }
+		DateTime? DateModified { set; get; }
 	}
 }

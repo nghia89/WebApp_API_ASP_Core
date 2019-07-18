@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using WebApp.Data.EF.Entities;
 
 namespace WebApp.Data.EF.BuilderExtensions
@@ -32,7 +29,7 @@ namespace WebApp.Data.EF.BuilderExtensions
 				entity.ToTable(nameof(Product));
 				entity.Property(x => x.Name).HasMaxLength(200).IsRequired();
 				entity.HasIndex(x => x.Id).IsUnique();
-				entity.HasIndex(x=>x.Name).ForMySqlIsFullText(true);
+				entity.HasIndex(x => new { x.Name }).ForMySqlIsFullText(true);
 			});
 
 			modelBuilder.Entity<ProductCategory>(entity => {
@@ -52,7 +49,7 @@ namespace WebApp.Data.EF.BuilderExtensions
 				entity.ToTable(nameof(Tag));
 				entity.HasIndex(x => x.Id).IsUnique();
 			});
-		
+
 		}
 	}
 }

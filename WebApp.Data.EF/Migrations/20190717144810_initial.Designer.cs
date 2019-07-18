@@ -9,14 +9,14 @@ using WebApp.Data.EF;
 namespace WebApp.Data.EF.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20190705103404_initial")]
+    [Migration("20190717144810_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -158,7 +158,7 @@ namespace WebApp.Data.EF.Migrations
 
                     b.Property<DateTime>("DateCreated");
 
-                    b.Property<DateTime>("DateModified");
+                    b.Property<DateTime?>("DateModified");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -213,7 +213,7 @@ namespace WebApp.Data.EF.Migrations
 
                     b.Property<DateTime>("DateCreated");
 
-                    b.Property<DateTime>("DateModified");
+                    b.Property<DateTime?>("DateModified");
 
                     b.Property<string>("Description");
 
@@ -227,15 +227,15 @@ namespace WebApp.Data.EF.Migrations
                         .IsRequired()
                         .HasMaxLength(200);
 
-                    b.Property<decimal>("OriginalPrice");
+                    b.Property<double?>("OriginalPrice");
 
-                    b.Property<decimal>("Price");
+                    b.Property<double>("Price");
 
                     b.Property<long?>("ProductCategoryId");
 
                     b.Property<long?>("ProductTagId");
 
-                    b.Property<decimal?>("PromotionPrice");
+                    b.Property<double?>("PromotionPrice");
 
                     b.Property<string>("SeoAlias");
 
@@ -273,7 +273,7 @@ namespace WebApp.Data.EF.Migrations
 
                     b.Property<DateTime>("DateCreated");
 
-                    b.Property<DateTime>("DateModified");
+                    b.Property<DateTime?>("DateModified");
 
                     b.Property<string>("Description");
 
@@ -289,7 +289,7 @@ namespace WebApp.Data.EF.Migrations
 
                     b.Property<int?>("ParentId");
 
-                    b.Property<long>("ProductId");
+                    b.Property<long?>("ProductId");
 
                     b.Property<string>("SeoAlias");
 
@@ -319,7 +319,7 @@ namespace WebApp.Data.EF.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<long>("ProductId");
+                    b.Property<long?>("ProductId");
 
                     b.Property<string>("TagId");
 
@@ -420,8 +420,7 @@ namespace WebApp.Data.EF.Migrations
                 {
                     b.HasOne("WebApp.Data.EF.Entities.Product", "Product")
                         .WithMany("ProductTags")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("WebApp.Data.EF.Entities.Tag", "Tag")
                         .WithMany()

@@ -21,9 +21,9 @@ namespace WebApp.Data.EF.Entities
 		public string SeoDescription { set; get; }
 		public int SortOrder { set; get; }
 		public List<Product> Products { set; get; }
-		public long ProductId { get; set; }
+		public long? ProductId { get; set; }
 		public DateTime DateCreated { get; set; }
-		public DateTime DateModified { get; set; }
+		public DateTime? DateModified { get; set; }
 		public Status Status { get; set; }
 	}
 }

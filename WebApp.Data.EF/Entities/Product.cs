@@ -10,9 +10,9 @@ namespace WebApp.Data.EF.Entities
 		public long Id { get; set; }
 		public string Name { get; set; }
 		public string Image { get; set; }
-		public decimal Price { get; set; }
-		public decimal? PromotionPrice { get; set; }
-		public decimal OriginalPrice { get; set; }
+		public double Price { get; set; }
+		public double? PromotionPrice { get; set; }
+		public double? OriginalPrice { get; set; }
 		public string Description { get; set; }
 		public string Content { get; set; }
 		public bool? HomeFlag { get; set; }
@@ -30,6 +30,6 @@ namespace WebApp.Data.EF.Entities
 		public string SeoDescription { set; get; }
 		public Status Status { get; set; }
 		public DateTime DateCreated { get; set; }
-		public DateTime DateModified { get; set; }
+		public DateTime? DateModified { get; set; }
 	}
 }

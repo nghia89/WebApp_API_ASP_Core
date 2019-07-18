@@ -48,7 +48,7 @@ namespace WebApp.Data.EF.Migrations
                     Balance = table.Column<decimal>(nullable: false),
                     Avatar = table.Column<string>(nullable: true),
                     DateCreated = table.Column<DateTime>(nullable: false),
-                    DateModified = table.Column<DateTime>(nullable: false),
+                    DateModified = table.Column<DateTime>(nullable: true),
                     Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -73,9 +73,9 @@ namespace WebApp.Data.EF.Migrations
                     SeoKeywords = table.Column<string>(nullable: true),
                     SeoDescription = table.Column<string>(nullable: true),
                     SortOrder = table.Column<int>(nullable: false),
-                    ProductId = table.Column<long>(nullable: false),
+                    ProductId = table.Column<long>(nullable: true),
                     DateCreated = table.Column<DateTime>(nullable: false),
-                    DateModified = table.Column<DateTime>(nullable: false),
+                    DateModified = table.Column<DateTime>(nullable: true),
                     Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -211,9 +211,9 @@ namespace WebApp.Data.EF.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 200, nullable: false),
                     Image = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(nullable: false),
-                    PromotionPrice = table.Column<decimal>(nullable: true),
-                    OriginalPrice = table.Column<decimal>(nullable: false),
+                    Price = table.Column<double>(nullable: false),
+                    PromotionPrice = table.Column<double>(nullable: true),
+                    OriginalPrice = table.Column<double>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     Content = table.Column<string>(nullable: true),
                     HomeFlag = table.Column<bool>(nullable: true),
@@ -229,7 +229,7 @@ namespace WebApp.Data.EF.Migrations
                     SeoDescription = table.Column<string>(nullable: true),
                     Status = table.Column<int>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
-                    DateModified = table.Column<DateTime>(nullable: false)
+                    DateModified = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -248,7 +248,7 @@ namespace WebApp.Data.EF.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    ProductId = table.Column<long>(nullable: false),
+                    ProductId = table.Column<long>(nullable: true),
                     TagId = table.Column<string>(nullable: true),
                     TagId1 = table.Column<long>(nullable: true)
                 },
@@ -260,7 +260,7 @@ namespace WebApp.Data.EF.Migrations
                         column: x => x.ProductId,
                         principalTable: "Product",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ProductTag_Tag_TagId1",
                         column: x => x.TagId1,
