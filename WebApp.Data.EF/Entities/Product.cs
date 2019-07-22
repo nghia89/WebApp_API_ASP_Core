@@ -23,7 +23,9 @@ namespace WebApp.Data.EF.Entities
 		public ProductCategory ProductCategory { set; get; }
 		public long? ProductCategoryId { get; set; }
 		public List<ProductTag> ProductTags { set; get; }
+		public List<Address> Addresses { set; get; }
 		public long? ProductTagId { get; set; }
+		public long? AddressesId { get; set; }
 		public string SeoPageTitle { set; get; }
 		public string SeoAlias { set; get; }
 		public string SeoKeywords { set; get; }

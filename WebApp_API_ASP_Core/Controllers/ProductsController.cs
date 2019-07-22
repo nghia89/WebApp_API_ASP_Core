@@ -27,7 +27,7 @@ namespace WebApp_API_ASP_Core.Controllers
         {
             var data = await _productBusiness.GetAll();
             var dataResult = data.Select(x => ProductViewModel.from(x)).ToList();
-            return  new JsonResult(dataResult);
+            return  new JsonResult(new { data=dataResult,total=dataResult.Count});
 
         }
         // POST: api/Products

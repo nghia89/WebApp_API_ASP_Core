@@ -9,7 +9,7 @@ using WebApp.Data.EF;
 namespace WebApp.Data.EF.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20190717144810_initial")]
+    [Migration("20190722042158_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -139,6 +139,44 @@ namespace WebApp.Data.EF.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("WebApp.Data.EF.Entities.Address", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long>("CityId");
+
+                    b.Property<long>("CountryId");
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<DateTime?>("DateModified");
+
+                    b.Property<long>("DistrictId");
+
+                    b.Property<long?>("ProductId");
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("Street");
+
+                    b.Property<long>("WardId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("DistrictId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("WardId");
+
+                    b.ToTable("Address");
+                });
+
             modelBuilder.Entity("WebApp.Data.EF.Entities.AppUser", b =>
                 {
                     b.Property<string>("Id")
@@ -204,10 +242,68 @@ namespace WebApp.Data.EF.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("WebApp.Data.EF.Entities.City", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Code");
+
+                    b.Property<long>("CountryId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("OtherName");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("City");
+                });
+
+            modelBuilder.Entity("WebApp.Data.EF.Entities.Country", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Code");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("OtherName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Country");
+                });
+
+            modelBuilder.Entity("WebApp.Data.EF.Entities.District", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long>("CityId");
+
+                    b.Property<string>("Code");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("OtherName");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.ToTable("District");
+                });
+
             modelBuilder.Entity("WebApp.Data.EF.Entities.Product", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<long?>("AddressesId");
 
                     b.Property<string>("Content");
 
@@ -354,6 +450,26 @@ namespace WebApp.Data.EF.Migrations
                     b.ToTable("Tag");
                 });
 
+            modelBuilder.Entity("WebApp.Data.EF.Entities.Ward", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Code");
+
+                    b.Property<long>("DistrictId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("OtherName");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DistrictId");
+
+                    b.ToTable("Ward");
+                });
+
             modelBuilder.Entity("WebApp.Data.EF.Entities.AppRole", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
@@ -408,6 +524,49 @@ namespace WebApp.Data.EF.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("WebApp.Data.EF.Entities.Address", b =>
+                {
+                    b.HasOne("WebApp.Data.EF.Entities.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WebApp.Data.EF.Entities.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WebApp.Data.EF.Entities.District", "District")
+                        .WithMany()
+                        .HasForeignKey("DistrictId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WebApp.Data.EF.Entities.Product", "Products")
+                        .WithMany("Addresses")
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("WebApp.Data.EF.Entities.Ward", "Ward")
+                        .WithMany()
+                        .HasForeignKey("WardId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("WebApp.Data.EF.Entities.City", b =>
+                {
+                    b.HasOne("WebApp.Data.EF.Entities.Country", "Country")
+                        .WithMany("Cities")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("WebApp.Data.EF.Entities.District", b =>
+                {
+                    b.HasOne("WebApp.Data.EF.Entities.City", "City")
+                        .WithMany("Districts")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("WebApp.Data.EF.Entities.Product", b =>
                 {
                     b.HasOne("WebApp.Data.EF.Entities.ProductCategory", "ProductCategory")
@@ -425,6 +584,14 @@ namespace WebApp.Data.EF.Migrations
                     b.HasOne("WebApp.Data.EF.Entities.Tag", "Tag")
                         .WithMany()
                         .HasForeignKey("TagId1");
+                });
+
+            modelBuilder.Entity("WebApp.Data.EF.Entities.Ward", b =>
+                {
+                    b.HasOne("WebApp.Data.EF.Entities.District", "District")
+                        .WithMany("Wards")
+                        .HasForeignKey("DistrictId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
