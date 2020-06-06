@@ -9,8 +9,8 @@ using WebApp.Data.EF;
 namespace WebApp.Data.EF.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20190722042158_initial")]
-    partial class initial
+    [Migration("20200606152506_initial_db")]
+    partial class initial_db
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
